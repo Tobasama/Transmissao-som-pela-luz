@@ -15,11 +15,12 @@ Após o tratamento eletrônico do sinal recebido, o áudio é reproduzido em uma
 
 ## Funcionamento
 
-1. O sinal analógico da guitarra é inserido em uma lazer
-2. O laser é modulado conforme o áudio
-3. O feixe é transmitido até o LED receptor (fotodiodo)
-4. O sinal recebido passa por filtragem e amplificação
-5. O áudio é enviado para a caixa de som
+1. O sinal analógico da guitarra é captado.
+2. O sinal da guitarra é ampliado.
+3. O laser recebe o sinal.
+4. O feixe é transmitido até o LED receptor (fotodiodo).
+5. O sinal recebido passa por filtragem e amplificação.
+6. O áudio é enviado para a caixa de som.
 
 <img width="995" height="631" alt="image" src="https://github.com/user-attachments/assets/2ec37627-4e80-4c31-a96b-e2939548c416" />
 
