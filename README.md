@@ -21,3 +21,4 @@ Após o tratamento eletrônico do sinal recebido, o áudio é reproduzido em uma
 4. O sinal recebido passa por filtragem e amplificação
 5. O áudio é enviado para a caixa de som
 
+[WhatsApp Image 2026-05-23 at 19.53.04.pdf](https://github.com/user-attachments/files/28323060/WhatsApp.Image.2026-05-23.at.19.53.04.pdf)
