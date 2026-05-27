@@ -1,4 +1,4 @@
-# Projetinho-de-comunica-o-a-lazer
+# Transmissao-som-pela-luz
 
 Este projeto tem como objetivo transmitir o sinal analógico de uma guitarra utilizando comunicação óptica via laser.
 O áudio captado pela guitarra é convertido em modulação luminosa, transmitido por um feixe laser e recebido por um sensor óptico desenvolvido pelos autores.
