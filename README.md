@@ -5,7 +5,7 @@ O áudio captado pela guitarra é convertido em modulação luminosa, transmitid
 Após o tratamento eletrônico do sinal recebido, o áudio é reproduzido em uma caixa de som.
 
 
-<img width="1049" height="151" alt="image" src="https://github.com/user-attachments/assets/1423feeb-c0b2-4891-bae9-03da636fee31" />
+<img width="1037" height="153" alt="image" src="https://github.com/user-attachments/assets/728c6263-5d8a-4519-88ce-74b06ead43fc" />
 
 
 ## Objetivos
@@ -20,3 +20,4 @@ Após o tratamento eletrônico do sinal recebido, o áudio é reproduzido em uma
 3. O feixe é transmitido até o LED receptor (fotodiodo)
 4. O sinal recebido passa por filtragem e amplificação
 5. O áudio é enviado para a caixa de som
+
