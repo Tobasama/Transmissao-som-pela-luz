@@ -1,0 +1,61 @@
+#include "pico/stdlib.h"
+#include "hardware/adc.h"
+#include "hardware/pwm.h"
+
+int main()
+{
+    // Inicializa USB serial (opcional)
+    stdio_init_all();
+
+    // =========================
+    // ADC CONFIG
+    // =========================
+
+    adc_init();
+
+    // GPIO26 = ADC0
+    adc_gpio_init(26);
+
+    // Seleciona ADC0
+    adc_select_input(0);
+
+    // =========================
+    // PWM CONFIG
+    // =========================
+
+    // GPIO15 como PWM
+    gpio_set_function(15, GPIO_FUNC_PWM);
+
+    // Descobre slice PWM do GPIO15
+    uint slice_num = pwm_gpio_to_slice_num(15);
+
+    // Configuração PWM
+    pwm_config config = pwm_get_default_config();
+
+    // Clock divisor
+    pwm_config_set_clkdiv(&config, 1.0f);
+
+    // Wrap máximo (16 bits)
+    pwm_config_set_wrap(&config, 65535);
+
+    // Inicializa PWM
+    pwm_init(slice_num, &config, true);
+
+    // =========================
+    // LOOP PRINCIPAL
+    // =========================
+
+    while (true)
+    {
+        // Lê ADC (12 bits: 0-4095)
+        uint16_t sample = adc_read();
+
+        // Converte para 16 bits
+        uint16_t pwm_value = sample << 4;
+
+        // Envia para PWM
+        pwm_set_gpio_level(15, pwm_value);
+    }
+
+    return 0;
+}
