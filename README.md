@@ -94,12 +94,12 @@ O sistema foi capaz de transmitir o sinal de áudio por comunicação óptica. A
 - Utilização de fotodiodo em substituição ao LED receptor.
 - Controle automático de ganho.
 - Maior alcance da transmissão.
-- 
+
+
+  
 <img width="1092" height="782" alt="WhatsApp Image 2026-06-22 at 19 32 08" src="https://github.com/user-attachments/assets/a729725e-b12c-4898-b5a9-e9eaef196c55" />
 
 
-
-<img width="1037" height="153" alt="image" src="https://github.com/user-attachments/assets/728c6263-5d8a-4519-88ce-74b06ead43fc" />
 
 ---
 
