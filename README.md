@@ -106,8 +106,11 @@ O sistema foi capaz de transmitir o sinal de áudio por comunicação óptica. A
 ## Autores
 
 Pethros Tsiloufas 21.01351-9
+
 Giovanni Corradini Nunes 23.00909-8
+
 Giovanna Macarroni Freire 23.00991-8
+
 Thomas Schneider Mourão  23.01209-9
 
 
