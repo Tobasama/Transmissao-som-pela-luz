@@ -96,9 +96,7 @@ O sistema foi capaz de transmitir o sinal de áudio por comunicação óptica. A
 - Maior alcance da transmissão.
 
 
-  
-<img width="1092" height="782" alt="WhatsApp Image 2026-06-22 at 19 32 08" src="https://github.com/user-attachments/assets/a729725e-b12c-4898-b5a9-e9eaef196c55" />
-
+<img width="911" height="652" alt="image" src="https://github.com/user-attachments/assets/e9cb2577-cab2-4299-8b13-9777f733054d" />
 
 
 ---
