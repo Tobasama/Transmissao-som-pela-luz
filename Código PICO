@@ -2,15 +2,15 @@
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
 
+#define BTN_UP     14
+#define BTN_DOWN   16
+
 int main()
 {
-
     stdio_init_all();
 
     adc_init();
-
     adc_gpio_init(26);
-
     adc_select_input(0);
 
     gpio_set_function(15, GPIO_FUNC_PWM);
@@ -18,23 +18,48 @@ int main()
     uint slice_num = pwm_gpio_to_slice_num(15);
 
     pwm_config config = pwm_get_default_config();
-
     pwm_config_set_clkdiv(&config, 1.0f);
-
     pwm_config_set_wrap(&config, 65535);
 
     pwm_init(slice_num, &config, true);
 
+    gpio_init(BTN_UP);
+    gpio_set_dir(BTN_UP, GPIO_IN);
+    gpio_pull_up(BTN_UP);
 
+    gpio_init(BTN_DOWN);
+    gpio_set_dir(BTN_DOWN, GPIO_IN);
+    gpio_pull_up(BTN_DOWN);
+
+    float volume = 1.0f;
 
     while (true)
     {
+        if (!gpio_get(BTN_UP))
+        {
+            if (volume < 2.0f)
+                volume += 0.1f;
+
+            sleep_ms(150); 
+        }
+
+
+        if (!gpio_get(BTN_DOWN))
+        {
+            if (volume > 0.0f)
+                volume -= 0.1f;
+
+            sleep_ms(150);
+        }
 
         uint16_t sample = adc_read();
 
+        uint32_t pwm_value = sample << 4;
 
-        uint16_t pwm_value = sample << 4;
+        pwm_value = (uint32_t)(pwm_value * volume);
 
+        if (pwm_value > 65535)
+            pwm_value = 65535;
 
         pwm_set_gpio_level(15, pwm_value);
     }
