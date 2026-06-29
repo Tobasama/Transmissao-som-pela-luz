@@ -100,6 +100,9 @@ O sistema foi capaz de transmitir o sinal de áudio por comunicação óptica. A
 
 
 ---
+## Link para a apresentação
+
+https://mauabr-my.sharepoint.com/:p:/r/personal/23_01209-9_maua_br/Documents/Documentos/Laser%20ppt.pptx?d=w85950283ec514298a94fb7b454f34cc0&csf=1&web=1&e=jyBJ3P
 
 ## Autores
 
