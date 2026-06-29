@@ -2,66 +2,83 @@
 #include "hardware/adc.h"
 #include "hardware/pwm.h"
 
-#define BTN_UP     14
-#define BTN_DOWN   16
+#define AUDIO_ADC_PIN 26
+#define VOLUME_ADC_PIN 27
+
+#define AUDIO_ADC_CHANNEL 0
+#define VOLUME_ADC_CHANNEL 1
+
+#define PWM_AUDIO_PIN 15
+
+#define LED_RED_PIN 16
+#define LED_GREEN_PIN 17
+
+#define AUDIO_MIDPOINT 2048
+#define AUDIO_THRESHOLD 80
+
+#define PWM_WRAP 1249   // PWM em 100 kHz com clock padrão de 125 MHz
 
 int main()
 {
     stdio_init_all();
 
     adc_init();
-    adc_gpio_init(26);
-    adc_select_input(0);
 
-    gpio_set_function(15, GPIO_FUNC_PWM);
+    adc_gpio_init(AUDIO_ADC_PIN);
+    adc_gpio_init(VOLUME_ADC_PIN);
 
-    uint slice_num = pwm_gpio_to_slice_num(15);
+    gpio_init(LED_RED_PIN);
+    gpio_set_dir(LED_RED_PIN, GPIO_OUT);
+
+    gpio_init(LED_GREEN_PIN);
+    gpio_set_dir(LED_GREEN_PIN, GPIO_OUT);
+
+    gpio_set_function(PWM_AUDIO_PIN, GPIO_FUNC_PWM);
+
+    uint slice_num = pwm_gpio_to_slice_num(PWM_AUDIO_PIN);
 
     pwm_config config = pwm_get_default_config();
+
     pwm_config_set_clkdiv(&config, 1.0f);
-    pwm_config_set_wrap(&config, 65535);
+    pwm_config_set_wrap(&config, PWM_WRAP);
 
     pwm_init(slice_num, &config, true);
 
-    gpio_init(BTN_UP);
-    gpio_set_dir(BTN_UP, GPIO_IN);
-    gpio_pull_up(BTN_UP);
-
-    gpio_init(BTN_DOWN);
-    gpio_set_dir(BTN_DOWN, GPIO_IN);
-    gpio_pull_up(BTN_DOWN);
-
-    float volume = 1.0f;
-
     while (true)
     {
-        if (!gpio_get(BTN_UP))
+        adc_select_input(AUDIO_ADC_CHANNEL);
+        uint16_t audio_sample = adc_read(); // 0 a 4095
+
+        adc_select_input(VOLUME_ADC_CHANNEL);
+        uint16_t volume = adc_read(); // 0 a 4095
+
+        int32_t audio_centered = (int32_t)audio_sample - AUDIO_MIDPOINT;
+
+        audio_centered = (audio_centered * volume) / 4095;
+
+        int32_t output_sample = audio_centered + AUDIO_MIDPOINT;
+
+        if (output_sample < 0)
+            output_sample = 0;
+
+        if (output_sample > 4095)
+            output_sample = 4095;
+
+        uint16_t pwm_value = (output_sample * PWM_WRAP) / 4095;
+
+        pwm_set_gpio_level(PWM_AUDIO_PIN, pwm_value);
+
+        if (audio_sample > AUDIO_MIDPOINT + AUDIO_THRESHOLD ||
+            audio_sample < AUDIO_MIDPOINT - AUDIO_THRESHOLD)
         {
-            if (volume < 2.0f)
-                volume += 0.1f;
-
-            sleep_ms(150); 
+            gpio_put(LED_GREEN_PIN, 1);
+            gpio_put(LED_RED_PIN, 0);
         }
-
-
-        if (!gpio_get(BTN_DOWN))
+        else
         {
-            if (volume > 0.0f)
-                volume -= 0.1f;
-
-            sleep_ms(150);
+            gpio_put(LED_GREEN_PIN, 0);
+            gpio_put(LED_RED_PIN, 1);
         }
-
-        uint16_t sample = adc_read();
-
-        uint32_t pwm_value = sample << 4;
-
-        pwm_value = (uint32_t)(pwm_value * volume);
-
-        if (pwm_value > 65535)
-            pwm_value = 65535;
-
-        pwm_set_gpio_level(15, pwm_value);
     }
 
     return 0;
